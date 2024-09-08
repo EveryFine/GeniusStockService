@@ -29,7 +29,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
     pip install mysqlclient && \
     pip install requests && \
     pip install arrow && \
-    pip install numpy && \
+    pip install numpy==1.26.4&& \
     pip install SQLAlchemy && \
     pip install PyMySQL && \
     pip install Logbook && \
