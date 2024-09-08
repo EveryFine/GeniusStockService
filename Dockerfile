@@ -43,7 +43,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
     pip install easytrader && \
     curl -SL https://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz | tar -xzC . && \
     cd ta-lib/  && \
-    ./configure --prefix=/usr && \
+    ./configure --build=aarch64-unknown-linux --prefix=/usr && \
     make && \
     make install && \
     cd .. && \
