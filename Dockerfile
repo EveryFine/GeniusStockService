@@ -29,7 +29,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
     pip install mysqlclient && \
     pip install requests && \
     pip install arrow && \
-    pip install numpy && \
+    pip install numpy==1.26.4&& \
     pip install SQLAlchemy && \
     pip install PyMySQL && \
     pip install Logbook && \
@@ -54,7 +54,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
 
 WORKDIR /data
 #InStock软件
-COPY stock /data/InStock
+COPY . /data/InStock
 COPY cron/cron.hourly /etc/cron.hourly
 COPY cron/cron.workdayly /etc/cron.workdayly
 COPY cron/cron.monthly /etc/cron.monthly
@@ -67,8 +67,8 @@ RUN chmod 755 /data/InStock/instock/bin/run_*.sh && \
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin \n\
 # min hour day month weekday command \n\
 */30 9,10,11,13,14,15 * * 1-5 /bin/run-parts /etc/cron.hourly \n\
-30 17 * * 1-5 /bin/run-parts /etc/cron.workdayly \n\
-30 10 * * 3,6 /bin/run-parts /etc/cron.monthly \n" > /var/spool/cron/crontabs/root && \
+30 21 * * 1-5 /bin/run-parts /etc/cron.workdayly \n\
+30 22 * * 3,6 /bin/run-parts /etc/cron.monthly \n" > /var/spool/cron/crontabs/root && \
     chmod 600 /var/spool/cron/crontabs/root
 
 ENTRYPOINT ["supervisord","-n","-c","/data/InStock/supervisor/supervisord.conf"]
