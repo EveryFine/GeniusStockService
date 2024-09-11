@@ -67,8 +67,8 @@ jobs:
           password: ${{ env.TARGET_SSH_PASSWORD }}
           port: ${{ env.TARGET_SSH_PORT }}
           script: |
-#            docker container stop geniusstock
-#            docker container rm geniusstock
+            docker container stop geniusstock
+            docker container rm geniusstock
             docker container run -d --name geniusstock --link=GeniusStockDbService \
                 -p ${{ env.TARGET_SERVICE_PORT }}:9988 \
                 -v ~/genius/GeniusStock/log:/data/InStock/instock/log \ 
