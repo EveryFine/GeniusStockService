@@ -1,7 +1,7 @@
 name: Genius Stock Service Deploy
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 env:
