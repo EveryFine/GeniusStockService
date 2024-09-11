@@ -71,7 +71,7 @@ jobs:
             docker container rm geniusstock
             docker container run -d --name geniusstock --link=GeniusStockDbService \
                 -p ${{ env.TARGET_SERVICE_PORT }}:9988 \
-                -v ~/genius/GeniusStock/log:/data/InStock/instock/log \ 
+                -v ~/genius/GeniusStock/log:/data/InStock/instock/log \
                 -e db_password=${{ env.STOCK_DB_PASSWORD }}  ${{needs.build-and-push-image.outputs.output_image_tags}}
 
 
