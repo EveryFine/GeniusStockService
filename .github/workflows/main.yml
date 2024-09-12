@@ -11,6 +11,7 @@ env:
   TARGET_SSH_USER: ${{ secrets.TARGET_SSH_USER }}
   TARGET_SSH_PASSWORD: ${{ secrets.TARGET_SSH_PASSWORD }}
   TARGET_SSH_PORT: ${{ secrets.TARGET_SSH_PORT }}
+  STOCK_DB_CONTAINER_NAME: GeniusStockDbService
   STOCK_DB_PASSWORD: ${{ secrets.STOCK_DB_PASSWORD }}
   TARGET_SERVICE_PORT: 9989
 
@@ -69,9 +70,11 @@ jobs:
           script: |
             docker container stop geniusstock
             docker container rm geniusstock
-            docker container run -d --name geniusstock --link=GeniusStockDbService \
+            docker container run -d --name geniusstock --link=${{ env.GeniusStockDbService }} \
                 -p ${{ env.TARGET_SERVICE_PORT }}:9988 \
                 -v ~/genius/GeniusStock/log:/data/InStock/instock/log \
-                -e db_password=${{ env.STOCK_DB_PASSWORD }}  ${{needs.build-and-push-image.outputs.output_image_tags}}
+                -e db_host=${{ env.GeniusStockDbService }} \
+                -e db_password=${{ env.STOCK_DB_PASSWORD }} \
+                ${{needs.build-and-push-image.outputs.output_image_tags}}
 
 
