@@ -1,11 +1,12 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
-
+import datetime
 import logging
 import concurrent.futures
 import os.path
 import sys
 import pandas as pd
+import numpy as np
 
 cpath_current = os.path.dirname(os.path.dirname(__file__))
 cpath = os.path.abspath(os.path.join(cpath_current, os.pardir))
@@ -111,8 +112,8 @@ def save_nph_stock_sector_fund_flow_data(date, before=True):
     # times = tuple(range(2))
     # with concurrent.futures.ThreadPoolExecutor(max_workers=len(times)) as executor:
     #     {executor.submit(stock_sector_fund_flow_data, date, k): k for k in times}
-    stock_sector_fund_flow_data(date, 0)
-    stock_sector_fund_flow_data(date, 1)
+    stock_sector_fund_flow_data(date, 0) # 0 行业资金流
+    stock_sector_fund_flow_data(date, 1) # 1 概念资金流
 
 def stock_sector_fund_flow_data(date, index_sector):
     try:
@@ -133,7 +134,7 @@ def stock_sector_fund_flow_data(date, index_sector):
             return
 
         data.insert(0, 'date', date.strftime("%Y-%m-%d"))
-
+        data.replace('-', np.nan, inplace=True)
         if index_sector == 0:
             tbs_table = tbs.TABLE_CN_STOCK_FUND_FLOW_INDUSTRY
         else:
@@ -233,4 +234,5 @@ def main():
 
 # main函数入口
 if __name__ == '__main__':
+    save_nph_stock_sector_fund_flow_data(datetime.date.today(), before=False)
     main()
